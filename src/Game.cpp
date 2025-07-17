@@ -1,3 +1,4 @@
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
@@ -8,9 +9,8 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Game::Game()
     : mWindow(sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Eagle Game")),
-      mPlayer(40.f) {
+      mTexture("assets/texture/Eagle.png"), mPlayer(mTexture) {
   mPlayer.setPosition({100.f, 100.f});
-  mPlayer.setFillColor(sf::Color::Red);
 }
 
 void Game::run() {

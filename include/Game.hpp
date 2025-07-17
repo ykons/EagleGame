@@ -1,5 +1,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 class Game {
 
@@ -18,7 +20,9 @@ private:
   static const sf::Time TimePerFrame;
 
   sf::RenderWindow mWindow;
-  sf::CircleShape mPlayer;
+
+  sf::Texture mTexture;
+  sf::Sprite mPlayer;
 
   bool mIsMovingUp = false;
   bool mIsMovingDown = false;
