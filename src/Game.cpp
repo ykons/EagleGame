@@ -1,4 +1,5 @@
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
@@ -9,8 +10,13 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Game::Game()
     : mWindow(sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Eagle Game")),
-      mTexture("assets/texture/Eagle.png"), mPlayer(mTexture) {
+      mTexture("assets/textures/Eagle.png"), mPlayer(mTexture),
+      mFont("assets/Sansation.ttf"), mStatisticsText(mFont),
+      mStatisticsUpdateTime(sf::Time::Zero) {
   mPlayer.setPosition({100.f, 100.f});
+
+  mStatisticsText.setFillColor(sf::Color::White);
+  mStatisticsText.setPosition({10.f, 10.f});
 }
 
 void Game::run() {
@@ -19,7 +25,8 @@ void Game::run() {
 
   while (mWindow.isOpen()) {
     processEvents();
-    timeSinceLastUpdate += clock.restart();
+    sf::Time elapsedTime = clock.restart();
+    timeSinceLastUpdate += elapsedTime;
 
     while (timeSinceLastUpdate > TimePerFrame) {
       timeSinceLastUpdate -= TimePerFrame;
@@ -27,6 +34,7 @@ void Game::run() {
       update(TimePerFrame);
     }
 
+    updateStatistics(elapsedTime);
     render();
   }
 }
@@ -75,8 +83,20 @@ void Game::update(sf::Time deltaTime) {
   mPlayer.move(movement);
 }
 
+void Game::updateStatistics(sf::Time deltaTime) {
+  mStatisticsUpdateTime += deltaTime;
+  ++mStatisticsNumFrames;
+
+  if (mStatisticsUpdateTime >= sf::seconds(1.f)) {
+    mStatisticsText.setString("FPS: " + std::to_string(mStatisticsNumFrames));
+    mStatisticsUpdateTime -= sf::seconds(1.f);
+    mStatisticsNumFrames = 0;
+  }
+}
+
 void Game::render() {
   mWindow.clear();
   mWindow.draw(mPlayer);
+  mWindow.draw(mStatisticsText);
   mWindow.display();
 }
