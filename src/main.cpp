@@ -4,7 +4,14 @@
 
 #include "Game.hpp"
 
+void loadTextures(TextureHolder &textures) {
+  textures.load(Textures::Eagle, "assets/textures/Eagle.png");
+  textures.load(Textures::Desert, "assets/textures/Desert.png");
+}
+
 int main() {
-  Game game;
+  TextureHolder textures;
+  loadTextures(textures);
+  Game game(textures);
   game.run();
 }

@@ -4,15 +4,29 @@
 #include <SFML/Window/VideoMode.hpp>
 
 #include "Game.hpp"
+#include "ResourceIdentifiers.hpp"
 
 const float Game::PlayerSpeed = 200.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
-Game::Game()
+Textures::ID toTextureID(Game::Type type) {
+  switch (type) {
+  case Game::Eagle:
+    return Textures::Eagle;
+  case Game::Desert:
+    return Textures::Desert;
+  default:
+    throw std::runtime_error("Unknown game type");
+  }
+}
+
+Game::Game(TextureHolder &textures)
     : mWindow(sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Eagle Game")),
-      mTexture("assets/textures/Eagle.png"), mPlayer(mTexture),
+      mTextures(textures), mType(Game::Eagle),
+      mPlayer(textures.get(toTextureID(Game::Eagle))),
       mFont("assets/Sansation.ttf"), mStatisticsText(mFont),
       mStatisticsUpdateTime(sf::Time::Zero) {
+
   mPlayer.setPosition({100.f, 100.f});
 
   mStatisticsText.setFillColor(sf::Color::White);

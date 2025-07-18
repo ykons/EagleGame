@@ -7,10 +7,15 @@
 #include <SFML/System/String.hpp>
 #include <cstddef>
 
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
+
 class Game {
+public:
+  enum Type { Eagle, Desert };
 
 public:
-  Game();
+  Game(TextureHolder &textures);
   void run();
 
 private:
@@ -27,7 +32,7 @@ private:
 
   sf::RenderWindow mWindow;
 
-  sf::Texture mTexture;
+  
   sf::Sprite mPlayer;
   sf::Font mFont;
   sf::Text mStatisticsText;
@@ -39,4 +44,7 @@ private:
   bool mIsMovingDown = false;
   bool mIsMovingLeft = false;
   bool mIsMovingRight = false;
+
+  Type mType;
+  TextureHolder &mTextures;
 };
