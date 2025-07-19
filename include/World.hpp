@@ -4,22 +4,27 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <Aircraft.hpp>
+#include <CommandQueue.hpp>
 #include <ResourceHolder.hpp>
 #include <ResourceIdentifiers.hpp>
 #include <SceneNode.hpp>
 
 class World {
+private:
+  enum Layer { Background, Air, LayerCount };
+
 public:
   explicit World(sf::RenderWindow &window);
   void update(sf::Time dt);
   void draw();
 
+  CommandQueue &getCommandQueue();
+
 private:
   void loadTextures();
   void buildScene();
-
-private:
-  enum Layer { Background, Air, LayerCount };
+  void adaptPlayerPosition();
+  void adaptPlayerVelocity();
 
 private:
   sf::RenderWindow &mWindow;
@@ -28,6 +33,7 @@ private:
 
   SceneNode mSceneGraph;
   std::array<SceneNode *, LayerCount> mSceneLayers;
+  CommandQueue mCommandQueue;
 
   sf::FloatRect mWorldBounds;
   sf::Vector2f mSpawnPosition;

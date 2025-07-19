@@ -20,6 +20,9 @@ add_executable(main
   src/Entity.cpp
   src/Aircraft.cpp
   src/World.cpp
+  src/Command.cpp
+  src/CommandQueue.cpp
+  src/Player.cpp
 )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)

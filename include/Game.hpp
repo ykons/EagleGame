@@ -1,6 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include "Player.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -22,7 +23,6 @@ private:
   void update(sf::Time elapsedTime);
   void render();
 
-  void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
   void updateStatistics(sf::Time deltaTime);
 
 private:
@@ -30,11 +30,11 @@ private:
 
   sf::RenderWindow mWindow;
   World mWorld;
+  Player mPlayer;
 
   sf::Font mFont;
   sf::Text mStatisticsText;
   sf::Time mStatisticsUpdateTime;
-
   std::size_t mStatisticsNumFrames = 0;
 };
 
