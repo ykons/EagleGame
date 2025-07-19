@@ -1,3 +1,6 @@
+#ifndef RESOURCEHOLDER_HPP
+#define RESOURCEHOLDER_HPP
+
 #include <cassert>
 #include <map>
 #include <memory>
@@ -23,3 +26,5 @@ private:
 };
 
 #include "ResourceHolder.inl"
+
+#endif // RESOURCEHOLDER_HPP

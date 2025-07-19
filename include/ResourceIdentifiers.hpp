@@ -6,7 +6,7 @@ class Texture;
 }
 
 namespace Textures {
-enum ID { Eagle, Desert };
+enum ID { Eagle, Raptor, Desert };
 }
 
 template <typename Resource, typename Identifier> class ResourceHolder;

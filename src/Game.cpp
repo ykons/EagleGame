@@ -3,31 +3,14 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-#include "Game.hpp"
-#include "ResourceIdentifiers.hpp"
+#include <Game.hpp>
 
-const float Game::PlayerSpeed = 200.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
-Textures::ID toTextureID(Game::Type type) {
-  switch (type) {
-  case Game::Eagle:
-    return Textures::Eagle;
-  case Game::Desert:
-    return Textures::Desert;
-  default:
-    throw std::runtime_error("Unknown game type");
-  }
-}
-
-Game::Game(TextureHolder &textures)
-    : mWindow(sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Eagle Game")),
-      mTextures(textures), mType(Game::Eagle),
-      mPlayer(textures.get(toTextureID(Game::Eagle))),
-      mFont("assets/Sansation.ttf"), mStatisticsText(mFont),
+Game::Game()
+    : mWindow(sf::RenderWindow(sf::VideoMode({640u, 480u}), "Eagle Game")),
+      mWorld(mWindow), mFont("assets/Sansation.ttf"), mStatisticsText(mFont),
       mStatisticsUpdateTime(sf::Time::Zero) {
-
-  mPlayer.setPosition({100.f, 100.f});
 
   mStatisticsText.setFillColor(sf::Color::White);
   mStatisticsText.setPosition({10.f, 10.f});
@@ -38,7 +21,6 @@ void Game::run() {
   sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
   while (mWindow.isOpen()) {
-    processEvents();
     sf::Time elapsedTime = clock.restart();
     timeSinceLastUpdate += elapsedTime;
 
@@ -66,35 +48,17 @@ void Game::processEvents() {
   }
 }
 
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-  if (key == sf::Keyboard::Key::W) {
-    mIsMovingUp = isPressed;
-  } else if (key == sf::Keyboard::Key::S) {
-    mIsMovingDown = isPressed;
-  } else if (key == sf::Keyboard::Key::A) {
-    mIsMovingLeft = isPressed;
-  } else if (key == sf::Keyboard::Key::D) {
-    mIsMovingRight = isPressed;
-  }
-}
+void Game::update(sf::Time elapsedTime) { mWorld.update(elapsedTime); }
 
-void Game::update(sf::Time deltaTime) {
-  sf::Vector2f movement({0.f, 0.f});
+void Game::render() {
+  mWindow.clear();
 
-  if (mIsMovingUp) {
-    movement.y -= PlayerSpeed * deltaTime.asSeconds();
-  }
-  if (mIsMovingDown) {
-    movement.y += PlayerSpeed * deltaTime.asSeconds();
-  }
-  if (mIsMovingLeft) {
-    movement.x -= PlayerSpeed * deltaTime.asSeconds();
-  }
-  if (mIsMovingRight) {
-    movement.x += PlayerSpeed * deltaTime.asSeconds();
-  }
+  mWorld.draw();
 
-  mPlayer.move(movement);
+  mWindow.setView(mWindow.getDefaultView());
+
+  mWindow.draw(mStatisticsText);
+  mWindow.display();
 }
 
 void Game::updateStatistics(sf::Time deltaTime) {
@@ -108,9 +72,4 @@ void Game::updateStatistics(sf::Time deltaTime) {
   }
 }
 
-void Game::render() {
-  mWindow.clear();
-  mWindow.draw(mPlayer);
-  mWindow.draw(mStatisticsText);
-  mWindow.display();
-}
+void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {}
