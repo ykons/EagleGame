@@ -4,24 +4,34 @@
 #include <MenuState.hpp>
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
+#include <Button.hpp>
 
 MenuState::MenuState(StateStack &stack, Context context)
-	: State(stack, context), mOptions(), mOptionIndex(0), mBackgroundSprite(context.textures->get(Textures::TitleScreen))
+	: State(stack, context), mBackgroundSprite(context.textures->get(Textures::TitleScreen)), mGUIContainer()
 {
-	sf::Font &font = context.fonts->get(Fonts::Main);
+	auto playButton = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
+	playButton->setPosition({100, 250});
+	playButton->setText("Play");
+	playButton->setCallback([this]()
+							{
+		requestStackPop();
+		requestStackPush(States::Game); });
 
-	// A simple menu demonstration
-	sf::Text playOption(font, "Play", 30);
-	centerOrigin(playOption);
-	playOption.setPosition(context.window->getView().getSize() / 2.f);
-	mOptions.push_back(playOption);
+	auto settingsButton = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
+	settingsButton->setPosition({100, 300});
+	settingsButton->setText("Settings");
+	settingsButton->setCallback([this]()
+								{ requestStackPush(States::Settings); });
 
-	sf::Text exitOption(font, "Exit", 30);
-	centerOrigin(exitOption);
-	exitOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 30.f));
-	mOptions.push_back(exitOption);
+	auto exitButton = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
+	exitButton->setPosition({100, 350});
+	exitButton->setText("Exit");
+	exitButton->setCallback([this]()
+							{ requestStackPop(); });
 
-	updateOptionText();
+	mGUIContainer.pack(playButton);
+	mGUIContainer.pack(settingsButton);
+	mGUIContainer.pack(exitButton);
 }
 
 void MenuState::draw()
@@ -29,10 +39,9 @@ void MenuState::draw()
 	sf::RenderWindow &window = *getContext().window;
 
 	window.setView(window.getDefaultView());
-	window.draw(mBackgroundSprite);
 
-	for (const sf::Text &text : mOptions)
-		window.draw(text);
+	window.draw(mBackgroundSprite);
+	window.draw(mGUIContainer);
 }
 
 bool MenuState::update(sf::Time)
@@ -42,58 +51,16 @@ bool MenuState::update(sf::Time)
 
 bool MenuState::handleEvent(const sf::Event &event)
 {
-	// The demonstration menu logic
-	if (!event.is<sf::Event::KeyPressed>())
-		return false;
+	mGUIContainer.handleEvent(event);
 
-	if (event.getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Enter)
+	if (event.is<sf::Event::KeyPressed>())
 	{
-		if (mOptionIndex == Play)
+		if (event.getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Escape)
 		{
 			requestStackPop();
-			requestStackPush(States::Loading);
-		}
-		else if (mOptionIndex == Exit)
-		{
-			// The exit option was chosen, by removing itself, the stack will be empty, and the game will know it is time to close.
-			requestStackPop();
+			return true;
 		}
 	}
 
-	else if (event.getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Up)
-	{
-		// Decrement and wrap-around
-		if (mOptionIndex > 0)
-			mOptionIndex--;
-		else
-			mOptionIndex = mOptions.size() - 1;
-
-		updateOptionText();
-	}
-
-	else if (event.getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Down)
-	{
-		// Increment and wrap-around
-		if (mOptionIndex < mOptions.size() - 1)
-			mOptionIndex++;
-		else
-			mOptionIndex = 0;
-
-		updateOptionText();
-	}
-
-	return true;
-}
-
-void MenuState::updateOptionText()
-{
-	if (mOptions.empty())
-		return;
-
-	// White all texts
-	for (sf::Text &text : mOptions)
-		text.setFillColor(sf::Color::White);
-
-	// Red the selected text
-	mOptions[mOptionIndex].setFillColor(sf::Color::Red);
+	return false;
 }

@@ -13,26 +13,32 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(main
-  src/main.cpp
-  src/Application.cpp
-  src/SceneNode.cpp
-  src/SpriteNode.cpp
-  src/Entity.cpp
-  src/Aircraft.cpp
-  src/World.cpp
-  src/Command.cpp
-  src/CommandQueue.cpp
-  src/Player.cpp
-  src/Utility.cpp
-  src/State.cpp
-  src/StateStack.cpp
-  src/TitleState.cpp
-  src/MenuState.cpp
-  src/LoadingState.cpp
-  src/PauseState.cpp
-  src/GameState.cpp
-  src/ParallelTask.cpp
-)
+    src/main.cpp
+    src/Application.cpp
+    src/World.cpp
+    src/Entity.cpp
+    src/SceneNode.cpp
+    src/SpriteNode.cpp
+    src/Aircraft.cpp
+    src/Command.cpp
+    src/CommandQueue.cpp
+    src/Player.cpp
+    src/State.cpp
+    src/StateStack.cpp
+    src/TitleState.cpp
+    src/MenuState.cpp
+    src/GameState.cpp
+    src/LoadingState.cpp
+    src/PauseState.cpp
+    src/SettingsState.cpp
+    src/Utility.cpp
+    src/Container.cpp
+    src/Component.cpp
+    src/Button.cpp
+    src/Label.cpp
+    src/ParallelTask.cpp
+    src/KeyToString.cpp
+    )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
