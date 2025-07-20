@@ -12,7 +12,7 @@ void ParallelTask::execute()
 {
 	mFinished = false;
 	mElapsedTime.restart();
-	mThread.join();
+	mThread.detach();
 }
 
 bool ParallelTask::isFinished()
@@ -26,7 +26,7 @@ float ParallelTask::getCompletion()
 	std::lock_guard<std::mutex> lock(mMutex);
 
 	// 100% at 10 seconds of elapsed time
-	return mElapsedTime.getElapsedTime().asSeconds() / 10.f;
+	return mElapsedTime.getElapsedTime().asSeconds() / 2.f;
 }
 
 void ParallelTask::runTask()
@@ -36,12 +36,12 @@ void ParallelTask::runTask()
 	while (!ended)
 	{
 		std::lock_guard<std::mutex> lock(mMutex); // Protect the clock 
-		if (mElapsedTime.getElapsedTime().asSeconds() >= 10.f)
+		if (mElapsedTime.getElapsedTime().asSeconds() >= 2.f)
 			ended = true;
 	}
 
 	{ // mFinished may be accessed from multiple threads, protect it
 		std::lock_guard<std::mutex> lock(mMutex);
 		mFinished = true;
-	}	
+	}
 }

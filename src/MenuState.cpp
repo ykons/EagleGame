@@ -54,7 +54,7 @@ bool MenuState::handleEvent(const sf::Event& event)
 		if (mOptionIndex == Play)
 		{
 			requestStackPop();
-			requestStackPush(States::Game);
+			requestStackPush(States::Loading);
 		}
 		else if (mOptionIndex == Exit)
 		{

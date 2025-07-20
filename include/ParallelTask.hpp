@@ -2,6 +2,7 @@
 #define PARALLELTASK_HPP
 
 #include <SFML/System/Clock.hpp>
+
 #include <mutex>
 #include <thread>
 
