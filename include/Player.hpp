@@ -9,9 +9,17 @@
 
 class CommandQueue;
 
-class Player {
+class Player
+{
 public:
-  enum Action { MoveLeft, MoveRight, MoveUp, MoveDown, ActionCount };
+  enum Action
+  {
+    MoveLeft,
+    MoveRight,
+    MoveUp,
+    MoveDown,
+    ActionCount
+  };
 
 public:
   Player();

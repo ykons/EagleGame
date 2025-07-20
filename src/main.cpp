@@ -4,7 +4,8 @@
 
 #include <Application.hpp>
 
-int main() {
+int main()
+{
   Application app;
   app.run();
 }

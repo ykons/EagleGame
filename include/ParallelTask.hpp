@@ -8,20 +8,20 @@
 
 class ParallelTask
 {
-	public:
-							ParallelTask();
-		void				execute();
-		bool				isFinished();
-		float				getCompletion();
+public:
+	ParallelTask();
+	void execute();
+	bool isFinished();
+	float getCompletion();
 
-	private:
-		void				runTask();
+private:
+	void runTask();
 
-	private:
-		std::thread			mThread;
-		bool				mFinished;
-		sf::Clock			mElapsedTime;
-		std::mutex			mMutex;
+private:
+	std::thread mThread;
+	bool mFinished;
+	sf::Clock mElapsedTime;
+	std::mutex mMutex;
 };
 
 #endif // PARALLELTASK_HPP

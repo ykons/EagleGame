@@ -7,7 +7,9 @@
 #include <stdexcept>
 #include <string>
 
-template <typename Resource, typename Identifier> class ResourceHolder {
+template <typename Resource, typename Identifier>
+class ResourceHolder
+{
 public:
   void load(Identifier id, const std::string &filename);
 

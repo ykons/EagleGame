@@ -6,13 +6,17 @@
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id,
-                                                const std::string &filename) {
+                                                const std::string &filename)
+{
   // Create and load resource
   std::unique_ptr<Resource> resource(new Resource());
-  if constexpr (std::is_same_v<Resource, sf::Font>) {
+  if constexpr (std::is_same_v<Resource, sf::Font>)
+  {
     if (!resource->openFromFile(filename))
       throw std::runtime_error("ResourceHolder::load<sf::Font> - Failed to load " + filename);
-  } else {
+  }
+  else
+  {
     if (!resource->loadFromFile(filename))
       throw std::runtime_error("ResourceHolder::load<sf::Texture> - Failed to load " + filename);
   }
@@ -25,7 +29,8 @@ template <typename Resource, typename Identifier>
 template <typename Parameter>
 void ResourceHolder<Resource, Identifier>::load(Identifier id,
                                                 const std::string &filename,
-                                                const Parameter &secondParam) {
+                                                const Parameter &secondParam)
+{
   // Create and load resource
   std::unique_ptr<Resource> resource(new Resource());
   if (!resource->loadFromFile(filename, secondParam))
@@ -37,7 +42,8 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id,
 }
 
 template <typename Resource, typename Identifier>
-Resource &ResourceHolder<Resource, Identifier>::get(Identifier id) {
+Resource &ResourceHolder<Resource, Identifier>::get(Identifier id)
+{
   auto found = mResourceMap.find(id);
   assert(found != mResourceMap.end());
 
@@ -45,7 +51,8 @@ Resource &ResourceHolder<Resource, Identifier>::get(Identifier id) {
 }
 
 template <typename Resource, typename Identifier>
-const Resource &ResourceHolder<Resource, Identifier>::get(Identifier id) const {
+const Resource &ResourceHolder<Resource, Identifier>::get(Identifier id) const
+{
   auto found = mResourceMap.find(id);
   assert(found != mResourceMap.end());
 
@@ -54,7 +61,8 @@ const Resource &ResourceHolder<Resource, Identifier>::get(Identifier id) const {
 
 template <typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::insertResource(
-    Identifier id, std::unique_ptr<Resource> resource) {
+    Identifier id, std::unique_ptr<Resource> resource)
+{
   // Insert and check success
   auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
   assert(inserted.second);

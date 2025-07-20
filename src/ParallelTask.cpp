@@ -3,8 +3,7 @@
 #include <ParallelTask.hpp>
 
 ParallelTask::ParallelTask()
-: mThread(&ParallelTask::runTask, this)
-, mFinished(false)
+	: mThread(&ParallelTask::runTask, this), mFinished(false)
 {
 }
 
@@ -35,7 +34,7 @@ void ParallelTask::runTask()
 	bool ended = false;
 	while (!ended)
 	{
-		std::lock_guard<std::mutex> lock(mMutex); // Protect the clock 
+		std::lock_guard<std::mutex> lock(mMutex); // Protect the clock
 		if (mElapsedTime.getElapsedTime().asSeconds() >= 2.f)
 			ended = true;
 	}

@@ -7,9 +7,14 @@
 #include <Entity.hpp>
 #include <ResourceIdentifiers.hpp>
 
-class Aircraft : public Entity {
+class Aircraft : public Entity
+{
 public:
-  enum Type { Eagle, Raptor };
+  enum Type
+  {
+    Eagle,
+    Raptor
+  };
 
 public:
   explicit Aircraft(Type type, const TextureHolder &textures);

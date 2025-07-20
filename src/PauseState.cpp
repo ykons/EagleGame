@@ -6,11 +6,11 @@
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
 
-PauseState::PauseState(StateStack& stack, Context context)
-: State(stack, context)
-// , mBackgroundSprite()
-, mPausedText(context.fonts->get(Fonts::Main), "Game Paused", 70)
-, mInstructionText(context.fonts->get(Fonts::Main), "(Press Backspace to return to the main menu)", 30)
+PauseState::PauseState(StateStack &stack, Context context)
+	: State(stack, context)
+	  // , mBackgroundSprite()
+	  ,
+	  mPausedText(context.fonts->get(Fonts::Main), "Game Paused", 70), mInstructionText(context.fonts->get(Fonts::Main), "(Press Backspace to return to the main menu)", 30)
 {
 	sf::Vector2f viewSize = context.window->getView().getSize();
 
@@ -23,7 +23,7 @@ PauseState::PauseState(StateStack& stack, Context context)
 
 void PauseState::draw()
 {
-	sf::RenderWindow& window = *getContext().window;
+	sf::RenderWindow &window = *getContext().window;
 	window.setView(window.getDefaultView());
 
 	sf::RectangleShape backgroundShape;
@@ -40,7 +40,7 @@ bool PauseState::update(sf::Time)
 	return false;
 }
 
-bool PauseState::handleEvent(const sf::Event& event)
+bool PauseState::handleEvent(const sf::Event &event)
 {
 	if (!event.is<sf::Event::KeyPressed>())
 		return false;

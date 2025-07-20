@@ -5,13 +5,10 @@
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
 
-MenuState::MenuState(StateStack& stack, Context context)
-: State(stack, context)
-, mOptions()
-, mOptionIndex(0)
-, mBackgroundSprite(context.textures->get(Textures::TitleScreen))
+MenuState::MenuState(StateStack &stack, Context context)
+	: State(stack, context), mOptions(), mOptionIndex(0), mBackgroundSprite(context.textures->get(Textures::TitleScreen))
 {
-	sf::Font& font = context.fonts->get(Fonts::Main);
+	sf::Font &font = context.fonts->get(Fonts::Main);
 
 	// A simple menu demonstration
 	sf::Text playOption(font, "Play", 30);
@@ -29,12 +26,12 @@ MenuState::MenuState(StateStack& stack, Context context)
 
 void MenuState::draw()
 {
-	sf::RenderWindow& window = *getContext().window;
+	sf::RenderWindow &window = *getContext().window;
 
 	window.setView(window.getDefaultView());
 	window.draw(mBackgroundSprite);
 
-	for (const sf::Text& text : mOptions)
+	for (const sf::Text &text : mOptions)
 		window.draw(text);
 }
 
@@ -43,7 +40,7 @@ bool MenuState::update(sf::Time)
 	return true;
 }
 
-bool MenuState::handleEvent(const sf::Event& event)
+bool MenuState::handleEvent(const sf::Event &event)
 {
 	// The demonstration menu logic
 	if (!event.is<sf::Event::KeyPressed>())
@@ -94,7 +91,7 @@ void MenuState::updateOptionText()
 		return;
 
 	// White all texts
-	for (sf::Text& text : mOptions)
+	for (sf::Text &text : mOptions)
 		text.setFillColor(sf::Color::White);
 
 	// Red the selected text

@@ -5,7 +5,8 @@
 
 #include <Command.hpp>
 
-class CommandQueue {
+class CommandQueue
+{
 public:
   void push(const Command &command);
   Command pop();

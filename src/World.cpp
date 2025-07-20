@@ -11,14 +11,16 @@ World::World(sf::RenderWindow &window)
       mWorldBounds({0.f, 0.f}, {mWorldView.getSize().x, 2000.f}),
       mSpawnPosition(mWorldView.getSize().x / 2.f,
                      mWorldBounds.size.y - mWorldView.getSize().y / 2.f),
-      mScrollSpeed(-50.f), mPlayerAircraft(nullptr) {
+      mScrollSpeed(-50.f), mPlayerAircraft(nullptr)
+{
   loadTextures();
   buildScene();
 
   mWorldView.setCenter(mSpawnPosition);
 }
 
-void World::update(sf::Time dt) {
+void World::update(sf::Time dt)
+{
   // Scroll the world, reset player velocity
   mWorldView.move({0.f, mScrollSpeed * dt.asSeconds()});
   mPlayerAircraft->setVelocity(0.f, 0.f);
@@ -34,22 +36,26 @@ void World::update(sf::Time dt) {
   adaptPlayerPosition();
 }
 
-void World::draw() {
+void World::draw()
+{
   mWindow.setView(mWorldView);
   mWindow.draw(mSceneGraph);
 }
 
 CommandQueue &World::getCommandQueue() { return mCommandQueue; }
 
-void World::loadTextures() {
+void World::loadTextures()
+{
   mTextures.load(Textures::Eagle, "assets/textures/Eagle.png");
   mTextures.load(Textures::Raptor, "assets/textures/Raptor.png");
   mTextures.load(Textures::Desert, "assets/textures/Desert.png");
 }
 
-void World::buildScene() {
+void World::buildScene()
+{
   // Initialize the different layers
-  for (std::size_t i = 0; i < LayerCount; ++i) {
+  for (std::size_t i = 0; i < LayerCount; ++i)
+  {
     SceneNode::Ptr layer(new SceneNode());
     mSceneLayers[i] = layer.get();
 
@@ -76,7 +82,8 @@ void World::buildScene() {
   mSceneLayers[Air]->attachChild(std::move(leader));
 }
 
-void World::adaptPlayerPosition() {
+void World::adaptPlayerPosition()
+{
   // Keep player's position inside the screen bounds, at least borderDistance
   // units from the border
   sf::FloatRect viewBounds(mWorldView.getCenter() - mWorldView.getSize() / 2.f,
@@ -93,7 +100,8 @@ void World::adaptPlayerPosition() {
   mPlayerAircraft->setPosition(position);
 }
 
-void World::adaptPlayerVelocity() {
+void World::adaptPlayerVelocity()
+{
   sf::Vector2f velocity = mPlayerAircraft->getVelocity();
 
   // If moving diagonally, reduce velocity (to have always same velocity)

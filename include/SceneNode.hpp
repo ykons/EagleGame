@@ -9,7 +9,8 @@
 
 #include <Command.hpp>
 
-class SceneNode : public sf::Transformable, public sf::Drawable {
+class SceneNode : public sf::Transformable, public sf::Drawable
+{
 public:
   typedef std::unique_ptr<SceneNode> Ptr;
 

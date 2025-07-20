@@ -7,18 +7,10 @@
 #include <PauseState.hpp>
 #include <LoadingState.hpp>
 
-const sf::Time Application::TimePerFrame = sf::seconds(1.f/60.f);
+const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
-: mWindow(sf::RenderWindow(sf::VideoMode({640u, 480u}), "Eagle Game", sf::Style::Close))
-, mTextures()
-, mFonts()
-, mFont("assets/Sansation.ttf")
-, mPlayer()
-, mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer))
-, mStatisticsText(mFont, "FPS: 0", 10)
-, mStatisticsUpdateTime()
-, mStatisticsNumFrames(0)
+	: mWindow(sf::RenderWindow(sf::VideoMode({640u, 480u}), "Eagle Game", sf::Style::Close)), mTextures(), mFonts(), mFont("assets/Sansation.ttf"), mPlayer(), mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer)), mStatisticsText(mFont, "FPS: 0", 10), mStatisticsUpdateTime(), mStatisticsNumFrames(0)
 {
 	mWindow.setKeyRepeatEnabled(false);
 

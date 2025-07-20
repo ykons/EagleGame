@@ -9,9 +9,15 @@
 #include <ResourceIdentifiers.hpp>
 #include <SceneNode.hpp>
 
-class World {
+class World
+{
 private:
-  enum Layer { Background, Air, LayerCount };
+  enum Layer
+  {
+    Background,
+    Air,
+    LayerCount
+  };
 
 public:
   explicit World(sf::RenderWindow &window);

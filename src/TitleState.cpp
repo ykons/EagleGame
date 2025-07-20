@@ -4,12 +4,8 @@
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
 
-TitleState::TitleState(StateStack& stack, Context context)
-: State(stack, context)
-, mBackgroundSprite(context.textures->get(Textures::TitleScreen))
-, mText(context.fonts->get(Fonts::Main), "Press any key to start", 30)
-, mShowText(true)
-, mTextEffectTime(sf::Time::Zero)
+TitleState::TitleState(StateStack &stack, Context context)
+	: State(stack, context), mBackgroundSprite(context.textures->get(Textures::TitleScreen)), mText(context.fonts->get(Fonts::Main), "Press any key to start", 30), mShowText(true), mTextEffectTime(sf::Time::Zero)
 {
 	centerOrigin(mText);
 	mText.setPosition(context.window->getView().getSize() / 2.f);
@@ -17,7 +13,7 @@ TitleState::TitleState(StateStack& stack, Context context)
 
 void TitleState::draw()
 {
-	sf::RenderWindow& window = *getContext().window;
+	sf::RenderWindow &window = *getContext().window;
 	window.draw(mBackgroundSprite);
 
 	if (mShowText)
@@ -37,7 +33,7 @@ bool TitleState::update(sf::Time dt)
 	return true;
 }
 
-bool TitleState::handleEvent(const sf::Event& event)
+bool TitleState::handleEvent(const sf::Event &event)
 {
 	// If any key is pressed, trigger the next screen
 	if (event.is<sf::Event::KeyPressed>())

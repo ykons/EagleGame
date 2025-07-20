@@ -5,10 +5,10 @@
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
 
-LoadingState::LoadingState(StateStack& stack, Context context)
-: State(stack, context), mLoadingText(context.fonts->get(Fonts::Main), "Loading Resources", 30)
+LoadingState::LoadingState(StateStack &stack, Context context)
+	: State(stack, context), mLoadingText(context.fonts->get(Fonts::Main), "Loading Resources", 30)
 {
-	sf::RenderWindow& window = *getContext().window;
+	sf::RenderWindow &window = *getContext().window;
 	sf::Vector2f viewSize = window.getView().getSize();
 
 	centerOrigin(mLoadingText);
@@ -18,7 +18,7 @@ LoadingState::LoadingState(StateStack& stack, Context context)
 	mProgressBarBackground.setSize(sf::Vector2f(viewSize.x - 20, 10));
 	mProgressBarBackground.setPosition({10, mLoadingText.getPosition().y + 40});
 
-	mProgressBar.setFillColor(sf::Color(100,100,100));
+	mProgressBar.setFillColor(sf::Color(100, 100, 100));
 	mProgressBar.setSize(sf::Vector2f(200, 10));
 	mProgressBar.setPosition({10, mLoadingText.getPosition().y + 40});
 
@@ -29,7 +29,7 @@ LoadingState::LoadingState(StateStack& stack, Context context)
 
 void LoadingState::draw()
 {
-	sf::RenderWindow& window = *getContext().window;
+	sf::RenderWindow &window = *getContext().window;
 
 	window.setView(window.getDefaultView());
 
@@ -53,7 +53,7 @@ bool LoadingState::update(sf::Time)
 	return true;
 }
 
-bool LoadingState::handleEvent(const sf::Event& event)
+bool LoadingState::handleEvent(const sf::Event &event)
 {
 	return true;
 }
