@@ -2,9 +2,9 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 
-#include <Game.hpp>
+#include <Application.hpp>
 
 int main() {
-  Game game;
-  game.run();
+  Application app;
+  app.run();
 }

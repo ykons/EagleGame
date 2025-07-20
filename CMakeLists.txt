@@ -14,7 +14,7 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(main
   src/main.cpp
-  src/Game.cpp
+  src/Application.cpp
   src/SceneNode.cpp
   src/SpriteNode.cpp
   src/Entity.cpp
@@ -23,6 +23,15 @@ add_executable(main
   src/Command.cpp
   src/CommandQueue.cpp
   src/Player.cpp
+  src/Utility.cpp
+  src/State.cpp
+  src/StateStack.cpp
+  src/TitleState.cpp
+  src/MenuState.cpp
+  src/LoadingState.cpp
+  src/PauseState.cpp
+  src/GameState.cpp
+  src/ParallelTask.cpp
 )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)
