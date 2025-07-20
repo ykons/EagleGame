@@ -10,6 +10,9 @@ Textures::ID toTextureID(Aircraft::Type type)
 
   case Aircraft::Raptor:
     return Textures::Raptor;
+
+  default:
+    throw std::runtime_error("Unknown game type");
   }
 }
 
