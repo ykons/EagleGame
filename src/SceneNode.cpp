@@ -53,10 +53,10 @@ void SceneNode::updateChildren(sf::Time dt, CommandQueue &commands)
 
 void SceneNode::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	// Apply transform of current node
+  // Apply transform of current node
   states.transform *= getTransform();
 
-	// Draw node and children with changed transform
+  // Draw node and children with changed transform
   drawCurrent(target, states);
   drawChildren(target, states);
 
@@ -125,7 +125,7 @@ void SceneNode::checkSceneCollision(SceneNode &sceneGraph, std::set<Pair> &colli
 
   for (const Ptr &child : sceneGraph.mChildren)
   {
-    checkNodeCollision(*child, collisionPairs);
+    checkSceneCollision(*child, collisionPairs);
   }
 }
 
@@ -169,18 +169,7 @@ bool SceneNode::isDestroyed() const
 
 bool collision(const SceneNode &lhs, const SceneNode &rhs)
 {
-  if (lhs.getCategory() == Category::Aircraft || rhs.getCategory() == Category::EnemyAircraft)
-    return false;
-
-  bool isColliding = lhs.getBoundingRect().findIntersection(rhs.getBoundingRect()).has_value();
-
-  if (isColliding)
-  {
-    // Check if the bounding rectangles intersect
-    sf::FloatRect intersection = lhs.getBoundingRect().findIntersection(rhs.getBoundingRect()).value();
-  }
-
-  return isColliding;
+  return lhs.getBoundingRect().findIntersection(rhs.getBoundingRect()).has_value();
 }
 
 float distance(const SceneNode &lhs, const SceneNode &rhs)
