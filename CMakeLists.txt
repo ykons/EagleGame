@@ -37,7 +37,11 @@ add_executable(main
     src/Button.cpp
     src/Label.cpp
     src/ParallelTask.cpp
-    src/KeyToString.cpp
+    src/TextNode.cpp
+    src/DataTables.cpp
+    src/GameOverState.cpp
+    src/Pickup.cpp
+    src/Projectile.cpp
     )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)

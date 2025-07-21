@@ -7,11 +7,12 @@
 #include <PauseState.hpp>
 #include <LoadingState.hpp>
 #include <SettingsState.hpp>
+#include <GameOverState.hpp>
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
-	: mWindow(sf::RenderWindow(sf::VideoMode({640u, 480u}), "Eagle Game", sf::Style::Close)), mTextures(), mFonts(), mFont("assets/Sansation.ttf"), mPlayer(), mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer)), mStatisticsText(mFont, "FPS: 0", 10), mStatisticsUpdateTime(), mStatisticsNumFrames(0)
+	: mWindow(sf::RenderWindow(sf::VideoMode({1024, 768}), "Eagle Game", sf::Style::Close)), mTextures(), mFonts(), mFont("assets/Sansation.ttf"), mPlayer(), mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer)), mStatisticsText(mFont, "FPS: 0", 10), mStatisticsUpdateTime(), mStatisticsNumFrames(0)
 {
 	mWindow.setKeyRepeatEnabled(false);
 
@@ -101,8 +102,9 @@ void Application::registerStates()
 {
 	mStateStack.registerState<TitleState>(States::Title);
 	mStateStack.registerState<MenuState>(States::Menu);
-	mStateStack.registerState<SettingsState>(States::Settings);
 	mStateStack.registerState<LoadingState>(States::Loading);
 	mStateStack.registerState<GameState>(States::Game);
 	mStateStack.registerState<PauseState>(States::Pause);
+	mStateStack.registerState<SettingsState>(States::Settings);
+	mStateStack.registerState<GameOverState>(States::GameOver);
 }

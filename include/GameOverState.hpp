@@ -1,5 +1,5 @@
-#ifndef PAUSESTATE_HPP
-#define PAUSESTATE_HPP
+#ifndef GAMEOVERSTATE_HPP
+#define GAMEOVERSTATE_HPP
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -7,19 +7,18 @@
 #include <State.hpp>
 #include <Container.hpp>
 
-class PauseState : public State
+class GameOverState : public State
 {
 public:
-	PauseState(StateStack &stack, Context context);
+	GameOverState(StateStack &stack, Context context);
 
 	virtual void draw();
 	virtual bool update(sf::Time dt);
 	virtual bool handleEvent(const sf::Event &event);
 
 private:
-	// sf::Sprite mBackgroundSprite;
-	sf::Text mPausedText;
-	GUI::Container mGUIContainer;
+	sf::Text mGameOverText;
+	sf::Time mElapsedTime;
 };
 
-#endif // PAUSESTATE_HPP
+#endif // GAMEOVERSTATE_HPP

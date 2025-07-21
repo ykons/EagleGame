@@ -4,21 +4,21 @@
 #include <Utility.hpp>
 #include <ResourceHolder.hpp>
 
-#include <KeyToString.hpp>
-
 SettingsState::SettingsState(StateStack &stack, Context context)
 	: State(stack, context), mGUIContainer(), mBackgroundSprite(context.textures->get(Textures::TitleScreen))
 {
 	// Build key binding buttons and labels
-	addButtonLabel(Player::MoveLeft, 150.f, "Move Left", context);
-	addButtonLabel(Player::MoveRight, 200.f, "Move Right", context);
-	addButtonLabel(Player::MoveUp, 250.f, "Move Up", context);
-	addButtonLabel(Player::MoveDown, 300.f, "Move Down", context);
+	addButtonLabel(Player::MoveLeft, 300.f, "Move Left", context);
+	addButtonLabel(Player::MoveRight, 350.f, "Move Right", context);
+	addButtonLabel(Player::MoveUp, 400.f, "Move Up", context);
+	addButtonLabel(Player::MoveDown, 450.f, "Move Down", context);
+	addButtonLabel(Player::Fire, 500.f, "Fire", context);
+	addButtonLabel(Player::LaunchMissile, 550.f, "Missile", context);
 
 	updateLabels();
 
 	auto backButton = std::make_shared<GUI::Button>(*context.fonts, *context.textures);
-	backButton->setPosition({80.f, 375.f});
+	backButton->setPosition({80.f, 620.f});
 	backButton->setText("Back");
 	backButton->setCallback(std::bind(&SettingsState::requestStackPop, this));
 
@@ -73,7 +73,7 @@ void SettingsState::updateLabels()
 	for (std::size_t i = 0; i < Player::ActionCount; ++i)
 	{
 		sf::Keyboard::Key key = player.getAssignedKey(static_cast<Player::Action>(i));
-		mBindingLabels[i]->setText(keyToString(key));
+		mBindingLabels[i]->setText(toString(key));
 	}
 }
 
