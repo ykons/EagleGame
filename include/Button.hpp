@@ -13,6 +13,9 @@
 #include <Component.hpp>
 #include <ResourceIdentifiers.hpp>
 #include <ResourceHolder.hpp>
+#include <State.hpp>
+
+class SoundPlayer;
 
 namespace GUI
 {
@@ -32,7 +35,7 @@ namespace GUI
         };
 
     public:
-        Button(const FontHolder &fonts, const TextureHolder &textures);
+        Button(State::Context context);
 
         void setCallback(Callback callback);
         void setText(const std::string &text);
@@ -56,6 +59,7 @@ namespace GUI
         sf::Sprite mSprite;
         sf::Text mText;
         bool mIsToggle;
+        SoundPlayer &mSounds;
     };
 
 }

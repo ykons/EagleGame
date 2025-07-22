@@ -10,6 +10,7 @@
 #include <ResourceIdentifiers.hpp>
 #include <SceneNode.hpp>
 #include <BloomEffect.hpp>
+#include <SoundPlayer.hpp>
 
 // Forward declaration
 namespace sf
@@ -41,7 +42,7 @@ private:
   };
 
 public:
-  explicit World(sf::RenderTarget &outputTarget, FontHolder &fonts);
+  World(sf::RenderTarget &outputTarget, FontHolder &fonts, SoundPlayer &sounds);
   void update(sf::Time dt);
   void draw();
 
@@ -55,6 +56,7 @@ private:
   void adaptPlayerPosition();
   void adaptPlayerVelocity();
   void handleCollisions();
+  void updateSounds();
 
   void buildScene();
   void addEnemies();
@@ -71,6 +73,7 @@ private:
   sf::View mWorldView;
   TextureHolder mTextures;
   FontHolder &mFonts;
+  SoundPlayer &mSounds;
 
   SceneNode mSceneGraph;
   std::array<SceneNode *, LayerCount> mSceneLayers;

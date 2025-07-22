@@ -22,7 +22,7 @@ public:
   };
 
 public:
-  explicit Aircraft(Type type, const TextureHolder &textures, const FontHolder &fonts);
+  Aircraft(Type type, const TextureHolder &textures, const FontHolder &fonts);
 
   virtual unsigned int getCategory() const;
   virtual sf::FloatRect getBoundingRect() const;
@@ -38,6 +38,7 @@ public:
 
   void fire();
   void launchMissile();
+  void playLocalSound(CommandQueue &commands, SoundEffect::ID effect);
 
 private:
   virtual void drawCurrent(sf::RenderTarget &target,
@@ -65,6 +66,7 @@ private:
   bool mIsFiring;
   bool mIsLaunchingMissile;
   bool mShowExplosion;
+  bool mPlayedExplosionSound;
   bool mSpawnedPickup;
 
   int mFireRateLevel;

@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include <memory>
+
 #include <ResourceHolder.hpp>
 #include <ResourceIdentifiers.hpp>
 #include <Player.hpp>
@@ -33,9 +35,11 @@ private:
 	sf::Font mFont;
 	Player mPlayer;
 
+	MusicPlayer mMusic;
+	SoundPlayer mSounds;
 	StateStack mStateStack;
 
-	sf::Text mStatisticsText;
+	std::unique_ptr<sf::Text> mStatisticsText;
 	sf::Time mStatisticsUpdateTime;
 	std::size_t mStatisticsNumFrames;
 };

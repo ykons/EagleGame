@@ -47,10 +47,13 @@ add_executable(main
     src/BloomEffect.cpp
     src/EmitterNode.cpp
     src/PostEffect.cpp
+    src/SoundNode.cpp
+    src/SoundPlayer.cpp
+    src/MusicPlayer.cpp
     )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)
 
 add_custom_command(TARGET main POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy_directory

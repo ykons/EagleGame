@@ -12,21 +12,23 @@
 const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
-	: mWindow(sf::RenderWindow(sf::VideoMode({1024, 768}), "Eagle Game", sf::Style::Close)), mTextures(), mFonts(), mFont("assets/Sansation.ttf"), mPlayer(), mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer)), mStatisticsText(mFont, "FPS: 0", 10), mStatisticsUpdateTime(), mStatisticsNumFrames(0)
+	: mWindow(sf::RenderWindow(sf::VideoMode({1024, 768}), "Eagle Game", sf::Style::Close)), mTextures(), mFonts(), mPlayer(), mMusic(), mSounds(), mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer, mMusic, mSounds)), mStatisticsText(nullptr), mStatisticsUpdateTime(), mStatisticsNumFrames(0)
 {
 	mWindow.setKeyRepeatEnabled(false);
+	mWindow.setVerticalSyncEnabled(true);
 
 	mFonts.load(Fonts::Main, "assets/Sansation.ttf");
 
 	mTextures.load(Textures::TitleScreen, "assets/textures/TitleScreen.png");
 	mTextures.load(Textures::Buttons, "assets/textures/Buttons.png");
 
-	mStatisticsText.setFont(mFonts.get(Fonts::Main));
-	mStatisticsText.setPosition({5.f, 5.f});
-	mStatisticsText.setCharacterSize(10u);
+	mStatisticsText = std::make_unique<sf::Text>(mFonts.get(Fonts::Main), "", 10u);
+	mStatisticsText->setPosition({5.f, 5.f});
 
 	registerStates();
 	mStateStack.pushState(States::Title);
+
+	mMusic.setVolume(25.f);
 }
 
 void Application::run()
@@ -78,7 +80,7 @@ void Application::render()
 	mStateStack.draw();
 
 	mWindow.setView(mWindow.getDefaultView());
-	mWindow.draw(mStatisticsText);
+	mWindow.draw(*mStatisticsText);
 
 	mWindow.display();
 }
@@ -89,7 +91,7 @@ void Application::updateStatistics(sf::Time dt)
 	mStatisticsNumFrames += 1;
 	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
 	{
-		mStatisticsText.setString("FPS: " + std::to_string(mStatisticsNumFrames));
+		mStatisticsText->setString("FPS: " + std::to_string(mStatisticsNumFrames));
 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
 		mStatisticsNumFrames = 0;
