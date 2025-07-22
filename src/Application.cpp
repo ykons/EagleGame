@@ -19,9 +19,7 @@ Application::Application()
 	mFonts.load(Fonts::Main, "assets/Sansation.ttf");
 
 	mTextures.load(Textures::TitleScreen, "assets/textures/TitleScreen.png");
-	mTextures.load(Textures::ButtonNormal, "assets/textures/ButtonNormal.png");
-	mTextures.load(Textures::ButtonSelected, "assets/textures/ButtonSelected.png");
-	mTextures.load(Textures::ButtonPressed, "assets/textures/ButtonPressed.png");
+	mTextures.load(Textures::Buttons, "assets/textures/Buttons.png");
 
 	mStatisticsText.setFont(mFonts.get(Fonts::Main));
 	mStatisticsText.setPosition({5.f, 5.f});

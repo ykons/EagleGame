@@ -7,6 +7,7 @@
 #include <cassert>
 
 #include <Utility.hpp>
+#include <Animation.hpp>
 
 namespace
 {
@@ -144,6 +145,12 @@ void centerOrigin(sf::Text &text)
 {
 	sf::FloatRect bounds = text.getLocalBounds();
 	text.setOrigin({std::floor(bounds.position.x + bounds.size.x / 2.f), std::floor(bounds.position.y + bounds.size.y / 2.f)});
+}
+
+void centerOrigin(Animation &animation)
+{
+	sf::FloatRect bounds = animation.getLocalBounds();
+	animation.setOrigin({std::floor(bounds.position.x + bounds.size.x / 2.f), std::floor(bounds.position.y + bounds.size.y / 2.f)});
 }
 
 float toDegree(float radian)

@@ -42,6 +42,11 @@ add_executable(main
     src/GameOverState.cpp
     src/Pickup.cpp
     src/Projectile.cpp
+    src/ParticleNode.cpp
+    src/Animation.cpp
+    src/BloomEffect.cpp
+    src/EmitterNode.cpp
+    src/PostEffect.cpp
     )
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)

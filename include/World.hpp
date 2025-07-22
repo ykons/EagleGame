@@ -2,17 +2,19 @@
 #define WORLD_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 
 #include <Aircraft.hpp>
 #include <CommandQueue.hpp>
 #include <ResourceHolder.hpp>
 #include <ResourceIdentifiers.hpp>
 #include <SceneNode.hpp>
+#include <BloomEffect.hpp>
 
 // Forward declaration
 namespace sf
 {
-  class RenderWindow;
+  class RenderTarget;
 }
 
 class World
@@ -21,7 +23,8 @@ private:
   enum Layer
   {
     Background,
-    Air,
+    LowerAir,
+    UpperAir,
     LayerCount
   };
 
@@ -38,7 +41,7 @@ private:
   };
 
 public:
-  explicit World(sf::RenderWindow &window, FontHolder &fonts);
+  explicit World(sf::RenderTarget &outputTarget, FontHolder &fonts);
   void update(sf::Time dt);
   void draw();
 
@@ -63,7 +66,8 @@ private:
   sf::FloatRect getBattlefieldBounds() const;
 
 private:
-  sf::RenderWindow &mWindow;
+  sf::RenderTarget &mTarget;
+  sf::RenderTexture mSceneTexture;
   sf::View mWorldView;
   TextureHolder mTextures;
   FontHolder &mFonts;
@@ -79,6 +83,8 @@ private:
 
   std::vector<SpawnPoint> mEnemySpawnPoints;
   std::vector<Aircraft *> mActiveEnemies;
+
+  BloomEffect mBloomEffect;
 };
 
 #endif // WORLD_HPP
